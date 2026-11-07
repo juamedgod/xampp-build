@@ -1098,8 +1098,8 @@ namespace eval xampp {
             chain $environment
         } {
             set name "xampp-skeleton"
-            set version 1.8.6
-            set rev 12
+            set version 1.8.7
+            set rev 0
             set tarballName xampp-skeleton-dev-unix-${version}-${rev}
             set licenseRelativePath ""
             set licenseNotes ""
@@ -1206,8 +1206,8 @@ UseFtpUsers}]
             chain $environment
         } {
             set name "xampp-skeleton"
-            set version 1.8.6
-            set rev 12
+            set version 1.8.7
+            set rev 0
             set tarballName xampp-skeleton-dev-unix-${version}-${rev}
         }
     }
