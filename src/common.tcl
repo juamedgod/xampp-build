@@ -1445,6 +1445,9 @@ if {$::tcl_platform(os) == "SunOS"} {
     public method tar {} {
         if {$::tcl_platform(os) == "SunOS"} {
             return /usr/local/bin/tar
+        } elseif {$::tcl_platform(os) == "Darwin" && [auto_execok gtar] != "" } {
+            # Prefer gtar if present on macos
+            return gtar
         } else {
             return tar
         }
