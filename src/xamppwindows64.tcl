@@ -583,7 +583,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist \
 	    windows64XamppApache \
@@ -616,7 +616,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2017 \
 	    windows64XamppApachePhp74 \
@@ -649,7 +649,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2019 \
 	    windows64XamppApachePhp80 \
@@ -681,7 +681,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2019 \
 	    windows64XamppApachePhp82 \
@@ -713,7 +713,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2019 \
 	    windows64XamppApachePhp81 \
@@ -745,7 +745,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2022 \
 	    windows64XamppApachePhp83 \
@@ -777,7 +777,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2022 \
 	    windows64XamppApachePhp84 \
@@ -821,7 +821,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist \
 	    windows64XamppApache \
@@ -848,7 +848,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2017 \
 	    windows64XamppApachePhp74 \
@@ -875,7 +875,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2019 \
 	    windows64XamppApachePhp80 \
@@ -902,7 +902,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2019 \
 	    windows64XamppApachePhp81 \
@@ -927,7 +927,7 @@
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windows64XamppVcredist2019 \
 	    windows64XamppApachePhp82 \

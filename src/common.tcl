@@ -71,10 +71,21 @@ if {$::tcl_platform(os) == "SunOS"} {
         return $destDir
     }
     public method copyFromExternalWorkspace {args} {
+        eval [list copyFromPrefixExternalWorkspaceToPrefix {} {}] $args
+    }
+
+    public method copyFromPrefixExternalWorkspaceToPrefix {srcPrefix destPrefix args} {
+        set outDir [xamppDestDir]
+        if {$destPrefix != ""} {
+            set outDir [file join $outDir $destPrefix]
+        }
         set externalWorkspaceDir [file join [[$this cget -be] cget -src] windowsXamppWorkspace xampp]
+        if {$srcPrefix != ""} {
+            set externalWorkspaceDir [file join $externalWorkspaceDir $srcPrefix]
+        }
         foreach file $args {
             set src [file join $externalWorkspaceDir $file]
-            set dest [file join [xamppDestDir] $file]
+            set dest [file join $outDir $file]
             if {![file exists [file dirname $dest]]} {
                 file mkdir [file dirname $dest]
             }

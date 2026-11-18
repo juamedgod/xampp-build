@@ -32,17 +32,39 @@
     }
 }
 
+::itcl::class windowsXamppControl {
+    inherit windowsXamppComponent
+    constructor {environment} {
+        chain $environment
+    } {
+        set name xampp-control
+        set version 3.3.1
+        set licenseRelativePath {}
+        set controlPanelVersion "3.3.1"
+        set tarballName xampp-control-${version}.zip
+    }
+    public method install {} {
+        chain
+        foreach f {xampp-control.exe src} {
+            file copy -force [file join [$be cget -src] xampp-control-${version} $f]  $xamppoutputdir/
+        }
+    }
+
+    public method copyFilesFromWorkspace {} {
+        copyFromWorkspace xampp-control.exe
+        copyFromWorkspace src
+    }
+}
+
 ::itcl::class windowsXamppWorkspace {
     inherit windowsXamppComponent
-    public variable controlPanelVersion
     constructor {environment} {
         chain $environment
     } {
         set name windowsXamppWorkspace
         set version 13
         set licenseRelativePath {}
-        set rev 0
-        set controlPanelVersion "3.3.0"
+        set rev 1
         set tarballName xampp-windows-workspace-${version}-${rev}.zip
     }
     public method extractDirectory {} {
@@ -56,10 +78,10 @@
     public method copyFilesFromWorkspace {} {
         copyFromExternalWorkspace licenses
 
-        copyFromExternalWorkspace xampp-control.exe xampp_start.exe xampp_stop.exe
+        copyFromExternalWorkspace xampp_start.exe xampp_stop.exe
         copyFromExternalWorkspace service.exe
         copyFromExternalWorkspace install/awk.exe
-        copyFromExternalWorkspace src
+        copyFromPrefixExternalWorkspaceToPrefix src/ src/ xampp-mailToDisk xampp-nsi-installer xampp-start-stop xampp-usb-lite
     }
 }
 
@@ -335,22 +357,29 @@
         chain $environment
     } {
         set name windowsXamppFileZillaFTP
-        set version 0.9.41
+        set version 1.12.6
         set dirName filezilla
         set licenseRelativePath {}
-        set tarballName FileZillaFTP-${version}-win32.zip
+        set tarballName FileZilla_Server_${version}_win64-setup.exe
         set mainComponentXMLName xampp-filezilla
     }
+    public method extract {} {
+        cd [extractDirectory]
+        set f [findTarball]
+        logexec 7z x $f -oFileZillaFTP
+    }
+    
     public method install {} {
         chain
         file copy -force [file join [$be cget -src] FileZillaFTP] [file join $xamppoutputdir FileZillaFTP]
         # this is really needed - and original XAMPP ships two binaries instead of renaming it
-        file copy -force "[file join $xamppoutputdir FileZillaFTP]/FileZilla server.exe" "[file join $xamppoutputdir FileZillaFTP]/FileZillaServer.exe"
-        file copy -force "[file join $xamppoutputdir FileZillaFTP]/FileZilla Server.xml" "[file join $xamppoutputdir FileZillaFTP]/FileZillaServer.xml"
+        #file copy -force "[file join $xamppoutputdir FileZillaFTP]/FileZilla server.exe" "[file join $xamppoutputdir FileZillaFTP]/FileZillaServer.exe"
+        #file copy -force "[file join $xamppoutputdir FileZillaFTP]/FileZilla Server.xml" "[file join $xamppoutputdir FileZillaFTP]/FileZillaServer.xml"
         copyFilesFromWorkspace
     }
     public method copyFilesFromWorkspace {} {
-        copyFromWorkspace filezilla_setup.bat filezilla_start.bat filezilla_stop.bat
+        copyFromWorkspace filezilla_service.bat filezilla_start.bat filezilla_stop.bat
+        copyFromWorkspaceToPrefix FileZillaFTP/config settings.xml
         file mkdir $xamppoutputdir/anonymous/incoming
         xampptcl::file::write $xamppoutputdir/anonymous/onefile.html "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\n<HTML>\n\t<HEAD>\n\t\t<TITLE> One File </TITLE>\n\t</HEAD>\n\n\t<BODY>\n\t\t<CENTER><B>One File!</B></CENTER>\n\t</BODY>\n</HTML>"
 
@@ -363,15 +392,15 @@
         chain $environment
     } {
         set name windowsXamppFileZillaFTPSource
-        set version 0.9.41
+        set version 1.12.6
         set licenseRelativePath {}
         set dirName filezilla
-        set tarballName FileZillaFTP-${version}-win32-sourcecode.zip
+        set tarballName FileZilla_Server_${version}_src.tar.xz
         set mainComponentXMLName xampp-filezilla
     }
     public method install {} {
         chain
-        file copy -force [file join [$be cget -src] FileZillaFTP-source] [file join $xamppoutputdir FileZillaFTP/source]
+        file copy -force [file join [$be cget -src] filezilla-server-1.12.6/] [file join $xamppoutputdir FileZillaFTP/source]
         copyFilesFromWorkspace
     }
     public method copyFilesFromWorkspace {} {
@@ -1434,7 +1463,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist \
 	    windowsXamppApache \
@@ -1468,7 +1497,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist2015 \
 	    windowsXamppApachePhp74 \
@@ -1500,7 +1529,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist2015 \
 	    windowsXamppApachePhp80 \
@@ -1532,7 +1561,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist2015 \
 	    windowsXamppApachePhp81 \
@@ -1564,7 +1593,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist \
 	    windowsXamppApache \
@@ -1591,7 +1620,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist2015 \
 	    windowsXamppApachePhp74 \
@@ -1617,7 +1646,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist2015 \
 	    windowsXamppApachePhp80 \
@@ -1643,7 +1672,7 @@ mssql.secure_connection=Off"
        constructor {environment} {
         chain $environment
     } {
-	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppWorkspace \
+	addComponents bitnamiFiles nativeadapter ::xampp::windowsXamppSkeleton windowsXamppControl windowsXamppWorkspace \
 	    windowsXamppHtdocs \
 	    windowsXamppVcredist2015 \
 	    windowsXamppApachePhp81 \

@@ -4,8 +4,6 @@
     <canBeEdited>1</canBeEdited>
     <show>1</show>
     <selected>1</selected>
-
-
     <folderList>
         <folder>
           <description>//XAMPP Files</description>
@@ -14,6 +12,26 @@
           <distributionFileList>
             <distributionDirectory origin="xampp/FileZillaFTP"/>
           </distributionFileList>
+          <actionList>
+                <substitute>
+                  <files>${installdir}/filezilla_*.bat</files>
+                  <substitutionList>
+                    <substitution pattern="@@XAMPP_INSTALLDIR@@" value="${installdir}"/>
+                  </substitutionList>
+                </substitute>
+                <setWindowsACL>
+                  <action>allow</action>
+                  <files>${installdir}/FileZillaFTP/config</files>
+                  <permissions>file_all_access</permissions>
+                  <users>S-1-5-32-544,S-1-5-18</users>
+                </setWindowsACL>
+                <setWindowsACL>
+                  <action>allow</action>
+                  <files>${installdir}/FileZillaFTP/config</files>
+                  <permissions>file_generic_read file_generic_execute</permissions>
+                  <users>S-1-5-32-545</users>
+                </setWindowsACL>
+          </actionList>
         </folder>
     </folderList>
     <postInstallationActionList>
