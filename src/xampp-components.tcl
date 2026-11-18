@@ -3156,7 +3156,7 @@ $cfg['Servers'][$i]['favorite'] = 'pma__favorite';} \
         }
         # remove when stable PHP 8.6 released
         public method srcdir {} {
-            return [file join [$be cget -src] "php-${version}RC5"]
+            return [file join [$be cget -src] "php-${version}"]
         }
     }
 

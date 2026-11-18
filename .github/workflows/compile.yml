@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [85, 84, 83]
+        version: [86, 85, 84, 83]
         os: [linux-x64, osx-arm64]
         include:
           - os: linux-x64
@@ -31,7 +31,7 @@ jobs:
                 https://sourceforge.net/projects/xampp/files/thirdparties/readline-8.3.tar.gz fe5383204467828cd495ee8d1d3c037a7eba1389c22bc6a041f627976f9061cc
                 https://sourceforge.net/projects/xampp/files/thirdparties/zlib-1.4.tar.gz 02dd159783677a749c04adbdd02b55b8a2bcc7e054f51b76b549199a916ad584
                 https://sourceforge.net/projects/xampp/files/thirdparties/freetype-2.15.0.tar.gz 9186627467a616d9a9e3e574748ac0c45fa77398e6364edef3041a8ba8d92f64
-
+                https://sourceforge.net/projects/xampp/files/thirdparties/php-8.6.0RC7.tar.gz 68b753e1d45e1417c6874008500de66102963cf0791e8c541211e9386318722e
           - os: osx-arm64
             runner: macos-15
             base_tarball: "https://sourceforge.net/projects/xampp/files/thirdparties/20261103/tarballs-unix-202611.tgz"
@@ -46,7 +46,7 @@ jobs:
                 https://sourceforge.net/projects/xampp/files/thirdparties/readline-8.3.tar.gz fe5383204467828cd495ee8d1d3c037a7eba1389c22bc6a041f627976f9061cc
                 https://sourceforge.net/projects/xampp/files/thirdparties/zlib-1.4.tar.gz 02dd159783677a749c04adbdd02b55b8a2bcc7e054f51b76b549199a916ad584
                 https://sourceforge.net/projects/xampp/files/thirdparties/freetype-2.15.0.tar.gz 9186627467a616d9a9e3e574748ac0c45fa77398e6364edef3041a8ba8d92f64
-
+                https://sourceforge.net/projects/xampp/files/thirdparties/php-8.6.0RC7.tar.gz 68b753e1d45e1417c6874008500de66102963cf0791e8c541211e9386318722e
           # Extremelly slow on macos-15-intel and fails. We should investigate crosscompiling on ARM
           # - os: osx-x64
           #   runner: macos-15-intel
