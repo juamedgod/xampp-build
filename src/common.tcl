@@ -811,7 +811,7 @@ if {$::tcl_platform(os) == "SunOS"} {
 
     constructor {} {
         if {![info exists ::env(DISABLE_LZMA_ULTRA)]} {
-            lappend setvars project.compressionAlgorithm=lzma-ultra
+            lappend setvars project.compressionAlgorithm=lzham-ultra
         } else {
             lappend setvars project.compressionAlgorithm=zip
         }
