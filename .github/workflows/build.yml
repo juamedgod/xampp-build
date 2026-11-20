@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [83, 84, 85]
+        version: [83, 84, 85, 86]
         os: [windows-x64, osx-arm64, linux-x64]
         include:
           - os: windows-x64
