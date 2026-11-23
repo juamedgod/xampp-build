@@ -137,7 +137,10 @@ jobs:
         uses: actions/cache@v5
         with:
           path: /tmp/tarballs
-          key: tarballs-${{ matrix.os }}
+          key: tarballs-${{ matrix.os }}-${{ matrix.version }}
+          restore-keys: |
+            tarballs-${{ matrix.os }}-
+            tarballs-
       - name: Install Linux dependencies
         run: |
           sudo apt-get update
