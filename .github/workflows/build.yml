@@ -61,6 +61,7 @@ jobs:
                 https://sourceforge.net/projects/xampp/files/xampp-skeleton/xampp-workspace-unix-1.8.8-0.tar.gz e5a23e1379e1196039446ead9646d0c2f55e6032fa2873707354359cf9909e9b
                 https://github.com/ApacheFriends/web/releases/download/20261107/xampp-htdocs-osx-20261107.tar.gz cc13e2e9c903d3be4b94566bf7e6ac15e94ea02b715720d2a1c7f72edb1beddd
                 https://sourceforge.net/projects/xampp/files/thirdparties/phpMyAdmin-5.2.3-all-languages.zip 2d2e13c735366d318425c78e4ee2cc8fc648d77faba3ddea2cd516e43885733f
+          - os: osx-arm64
             version: 82
             base_tarball: "https://github.com/ApacheFriends/xampp-build/releases/download/tarballs%2F20261121/xampp82-osx-arm64-20261121.tar.gz"
             base_tarball_sha256: "f5d9a3922cd07049964f2d15319a62ebad219b9b6ac444450ac35ccf34764a77"
