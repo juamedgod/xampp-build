@@ -152,15 +152,15 @@ jobs:
         with:
           path: /tmp/base-tarballs/${{ steps.base_tarball.outputs.filename }}
           key: base-tarball-${{ matrix.base_tarball_sha256 }}
-      - name: Cache tarballs
-        id: cache-tarballs
-        uses: actions/cache@v5
-        with:
-          path: /tmp/tarballs
-          key: tarballs-${{ matrix.os }}-${{ matrix.version }}
-          restore-keys: |
-            tarballs-${{ matrix.os }}-
-            tarballs-
+      # - name: Cache tarballs
+      #   id: cache-tarballs
+      #   uses: actions/cache@v5
+      #   with:
+      #     path: /tmp/tarballs
+      #     key: tarballs-${{ matrix.os }}-${{ matrix.version }}
+      #     restore-keys: |
+      #       tarballs-${{ matrix.os }}-
+      #       tarballs-
       - name: Install Linux dependencies
         run: |
           sudo apt-get update
@@ -199,7 +199,7 @@ jobs:
       - name: Get tarballs
         id: get-tarballs
         env:
-          SOURCEFORGE_CACHE_SERVER: ${{ vars.SOURCEFORGE_CACHE_SERVER }}
+          SOURCEFORGE_CACHE_SERVER: ${{ secrets.SOURCEFORGE_CACHE_SERVER }}
           SOURCEFORGE_CACHE_SERVER_AUTH: ${{ secrets.SOURCEFORGE_CACHE_SERVER_AUTH }}
         run: |
           set -euo pipefail
