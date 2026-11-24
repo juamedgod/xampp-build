@@ -201,6 +201,7 @@ jobs:
         env:
           SOURCEFORGE_CACHE_SERVER: ${{ secrets.SOURCEFORGE_CACHE_SERVER }}
           SOURCEFORGE_CACHE_SERVER_AUTH: ${{ secrets.SOURCEFORGE_CACHE_SERVER_AUTH }}
+          SOURCEFORGE_CACHE_SERVER_ENABLED: "true"
         run: |
           set -euo pipefail
           download_file() {
@@ -208,11 +209,11 @@ jobs:
             local output="${2:-$(basename "${url%%\?*}")}"
             local download_url="$url"
             local auth_args=()
-            if [[ -n "${SOURCEFORGE_CACHE_SERVER:-}" ]]; then
-              echo "have SOURCEFORGE_CACHE_SERVER"
+            if [[ "${SOURCEFORGE_CACHE_SERVER_ENABLED:-true}" == "true" ]] &&
+               [[ -n "${SOURCEFORGE_CACHE_SERVER:-}" ]] &&
+               [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
               case "$url" in
                 https://sourceforge.net/projects/xampp/files/*)
-                  echo "url matches"
                   download_url="${SOURCEFORGE_CACHE_SERVER%/}/${url#*://sourceforge.net/}"
                   if [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
                       auth_args+=(-H "Authorization: ${SOURCEFORGE_CACHE_SERVER_AUTH}")
