@@ -1358,7 +1358,6 @@ mssql.secure_connection=Off"
 
     public method packXampp {} {
 	set xamppName "xampp-portable-windows-x64-${version}-${rev}-${xampp_vcredist_name}"
-
 	set wd [pwd]
 	cd [$be cget -output]
 
@@ -1400,7 +1399,6 @@ mssql.secure_connection=Off"
     inherit windowsXamppPortable
     constructor {environment} {
         chain $environment
-        set xampp_vcredist_name VS16
     } {
     }
     public method packXampp {} {
@@ -1434,6 +1432,7 @@ mssql.secure_connection=Off"
     inherit windowsXamppPortablePhp80
     constructor {environment} {
         set shortVersionID 82
+        set xampp_vcredist_name VS16
         chain $environment
     } {
     }
@@ -1443,6 +1442,7 @@ mssql.secure_connection=Off"
     inherit windowsXamppPortablePhp80
     constructor {environment} {
         set shortVersionID 83
+        set xampp_vcredist_name VS16
         chain $environment
     } {
     }
@@ -1452,6 +1452,7 @@ mssql.secure_connection=Off"
     inherit windowsXamppPortablePhp80
     constructor {environment} {
         set shortVersionID 84
+        set xampp_vcredist_name VS17
         chain $environment
     } {
     }
@@ -1461,6 +1462,7 @@ mssql.secure_connection=Off"
     inherit windowsXamppPortablePhp80
     constructor {environment} {
         set shortVersionID 85
+        set xampp_vcredist_name VS17
         chain $environment
     } {
     }
@@ -1469,6 +1471,7 @@ mssql.secure_connection=Off"
     inherit windowsXamppPortablePhp80
     constructor {environment} {
         set shortVersionID 86
+        set xampp_vcredist_name VS18
         chain $environment
     } {
     }
