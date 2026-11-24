@@ -985,6 +985,9 @@
                 set platformUrl "Windows"
                 set requirements "Windows 2008, 2012, Vista, 7, 8, 10, 11 (Important: XP or 2003 not supported)"
                 set osTag "x64"
+                if {[string match *portable* [$targetInstance cget -name]]} {
+                    set firstLevel "windows-portable"
+                }
             }
             if {$mergeFiles == 1} {
                 set destYamlFile [file join $releasesPath $linkFileName.yml]
