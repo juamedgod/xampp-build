@@ -209,8 +209,10 @@ jobs:
             local download_url="$url"
             local auth_args=()
             if [[ -n "${SOURCEFORGE_CACHE_SERVER:-}" ]]; then
+              echo "have SOURCEFORGE_CACHE_SERVER"
               case "$url" in
-                https://sourceforge.net/projects/xampp/files/*|http://downloads.sourceforge.net/*)
+                https://sourceforge.net/projects/xampp/files/*)
+                  echo "url matches"
                   download_url="${SOURCEFORGE_CACHE_SERVER%/}/${url#*://sourceforge.net/}"
                   if [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
                       auth_args+=(-H "Authorization: ${SOURCEFORGE_CACHE_SERVER_AUTH}")
@@ -220,7 +222,7 @@ jobs:
               esac
             fi
 
-            curl --fail --location --retry 3 --show-error \
+            curl --silent --fail --location --retry 3 --show-error \
               "${auth_args[@]}" \
               --output "$output" \
               "$download_url"
