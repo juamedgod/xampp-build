@@ -198,15 +198,39 @@ jobs:
           /opt/installbuilder/bin/builder check-license
       - name: Get tarballs
         id: get-tarballs
+        env:
+          SOURCEFORGE_CACHE_SERVER: ${{ vars.SOURCEFORGE_CACHE_SERVER }}
+          SOURCEFORGE_CACHE_SERVER_AUTH: ${{ secrets.SOURCEFORGE_CACHE_SERVER_AUTH }}
         run: |
           set -euo pipefail
+          download_file() {
+            local url="$1"
+            local output="${2:-$(basename "${url%%\?*}")}"
+            local download_url="$url"
+            local auth_args=()
+            if [[ -n "${SOURCEFORGE_CACHE_SERVER:-}" ]]; then
+              case "$url" in
+                https://sourceforge.net/projects/xampp/files/*|http://downloads.sourceforge.net/*)
+                  download_url="${SOURCEFORGE_CACHE_SERVER%/}/${url#*://sourceforge.net/}"
+                  if [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
+                      auth_args+=(-H "Authorization: ${SOURCEFORGE_CACHE_SERVER_AUTH}")
+                  fi
+                  echo "Using download cache"
+                  ;;
+              esac
+            fi
+
+            curl --fail --location --retry 3 --show-error \
+              "${auth_args[@]}" \
+              --output "$output" \
+              "$download_url"
+          }
           mkdir -p /tmp/tarballs
           cd /tmp/tarballs/
           BASE_FILE=$(basename '${{ matrix.base_tarball }}')
           if [[ ! -f "/tmp/tarballs/$BASE_FILE" ]]; then
             echo "Downloading base tarball..."
-            curl --fail --show-error --silent --retry 3 -L \
-              -O '${{ matrix.base_tarball }}'
+            download_file '${{ matrix.base_tarball }}'
           else
             echo "Found local file $BASE_FILE"
           fi
@@ -222,7 +246,7 @@ jobs:
             local_file=$(basename "$url")
             if [[ ! -f "$local_file" ]]; then
               echo "Downloading  $local_file from -> $url"
-              curl --fail --show-error --silent --retry 3 -L -o "$local_file" "$url"
+              download_file "$url"
             else
               echo "Using local file $local_file"
             fi
