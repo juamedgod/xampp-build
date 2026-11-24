@@ -99,24 +99,58 @@ jobs:
            echo Nothing to do for macOS
       - name: Get tarballs
         id: get-tarballs
-        if: steps.cache-tarballs.outputs.cache-hit != 'true'
+        env:
+          SOURCEFORGE_CACHE_SERVER: ${{ secrets.SOURCEFORGE_CACHE_SERVER }}
+          SOURCEFORGE_CACHE_SERVER_AUTH: ${{ secrets.SOURCEFORGE_CACHE_SERVER_AUTH }}
+          SOURCEFORGE_CACHE_SERVER_ENABLED: "true"
         run: |
           set -euo pipefail
-          set -x
-          mkdir /tmp/tarballs
+          download_file() {
+            local url="$1"
+            local output="${2:-$(basename "${url%%\?*}")}"
+            local download_url="$url"
+            local auth_args=()
+            if [[ "${SOURCEFORGE_CACHE_SERVER_ENABLED:-true}" == "true" ]] &&
+               [[ -n "${SOURCEFORGE_CACHE_SERVER:-}" ]] &&
+               [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
+              case "$url" in
+                https://sourceforge.net/projects/xampp/files/*)
+                  download_url="${SOURCEFORGE_CACHE_SERVER%/}/${url#*://sourceforge.net/}"
+                  if [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
+                      auth_args+=(-H "Authorization: ${SOURCEFORGE_CACHE_SERVER_AUTH}")
+                  fi
+                  echo "Using download cache"
+                  ;;
+              esac
+            fi
+
+            curl --silent --fail --location --retry 3 --show-error \
+              "${auth_args[@]}" \
+              --output "$output" \
+              "$download_url"
+          }
+          mkdir -p /tmp/tarballs
           cd /tmp/tarballs/
-          echo "Downloading base tarball..."
-          curl --fail --show-error --silent --retry 3 -L \
-            -O '${{ matrix.base_tarball }}'
           BASE_FILE=$(basename '${{ matrix.base_tarball }}')
+          if [[ ! -f "/tmp/tarballs/$BASE_FILE" ]]; then
+            echo "Downloading base tarball..."
+            download_file '${{ matrix.base_tarball }}'
+          else
+             echo "Found local file $BASE_FILE"
+          fi
           echo "${{ matrix.base_tarball_sha256 }}  $BASE_FILE" | sha256sum -c -
           echo "Extracting $BASE_FILE ..."
           tar -xzf "$BASE_FILE"
           echo "Downloading extra binaries..."
           while read -r url sha; do
             [ -z "$url" ] && continue
-            echo "  -> $url"
-            curl --fail --show-error --silent --retry 3 -L -O "$url"
+            local_file=$(basename "$url")
+            if [[ ! -f "$local_file" ]]; then
+              echo "Downloading  $local_file from -> $url"
+              download_file "$url"
+            else
+              echo "Using local file $local_file"
+            fi
             echo "$sha  $(basename "$url")" | sha256sum -c -
           done <<< "${{ matrix.extra_binaries }}"
       - name: Build
