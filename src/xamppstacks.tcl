@@ -1116,21 +1116,59 @@ return
 }
 ::itcl::class xamppportableinstaller82stack {
     inherit xamppportableinstallerstack
+    protected variable shortVersionID {}
     constructor {environment} {
         chain $environment
-        set version [::xampp::php::getXAMPPVersion 82]
-        set rev [::xampp::php::getXAMPPRevision 82]
-        set application ::xampp::php82
-        set xampp_vcredist_name VS16
+        set shortVersionID 82
     } {
+        set version [::xampp::php::getXAMPPVersion $shortVersionID]
+        set rev [::xampp::php::getXAMPPRevision $shortVersionID]
+        set application ::xampp::php$shortVersionID
+        set xampp_vcredist_name VS16
     }
     public method getBaseNameForPlatform {} {
-        return XamppPortableInstallerPhp82Stack
+        return XamppPortableInstallerPhp${shortVersionID}Stack
     }
     public method confFileName {} {
-        return xamppinstallerphp82
+        return xamppinstallerphp${shortVersionID}
     }
 }
+
+::itcl::class xamppportableinstaller83stack {
+    inherit xamppportableinstaller82stack
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 83
+    } {
+    }
+}
+
+::itcl::class xamppportableinstaller84stack {
+    inherit xamppportableinstaller82stack
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 84
+    } {
+    }
+}
+::itcl::class xamppportableinstaller85stack {
+    inherit xamppportableinstaller82stack
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 85
+    } {
+    }
+}
+::itcl::class xamppportableinstaller86stack {
+    inherit xamppportableinstaller82stack
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 86
+    } {
+    }
+}
+
+
 ::itcl::class xampp {
     inherit phpBitnamiProgram
     constructor {environment} {

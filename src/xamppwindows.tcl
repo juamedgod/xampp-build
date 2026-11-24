@@ -1413,30 +1413,65 @@ mssql.secure_connection=Off"
 
 ::itcl::class windowsXamppPortablePhp80 {
     inherit windowsXamppPortablePhp8
+    protected variable shortVersionID {}
     constructor {environment} {
         chain $environment
-        set version [::xampp::php::getXAMPPVersion 80]
-        set rev [::xampp::php::getXAMPPRevision 80]
+        set shortVersionID 80
     } {
+        set version [::xampp::php::getXAMPPVersion $shortVersionID]
+        set rev [::xampp::php::getXAMPPRevision $shortVersionID]
     }
 }
 
 ::itcl::class windowsXamppPortablePhp81 {
-    inherit windowsXamppPortablePhp8
+    inherit windowsXamppPortablePhp80
     constructor {environment} {
         chain $environment
-        set version [::xampp::php::getXAMPPVersion 81]
-        set rev [::xampp::php::getXAMPPRevision 81]
+        set shortVersionID 81
     } {
     }
 }
 
 ::itcl::class windowsXamppPortablePhp82 {
-    inherit windowsXamppPortablePhp8
+    inherit windowsXamppPortablePhp80
     constructor {environment} {
         chain $environment
-        set version [::xampp::php::getXAMPPVersion 82]
-        set rev [::xampp::php::getXAMPPRevision 82]
+        set shortVersionID 82
+    } {
+    }
+}
+
+::itcl::class windowsXamppPortablePhp83 {
+    inherit windowsXamppPortablePhp80
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 83
+    } {
+    }
+}
+
+::itcl::class windowsXamppPortablePhp84 {
+    inherit windowsXamppPortablePhp80
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 84
+    } {
+    }
+}
+
+::itcl::class windowsXamppPortablePhp85 {
+    inherit windowsXamppPortablePhp80
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 85
+    } {
+    }
+}
+::itcl::class windowsXamppPortablePhp86 {
+    inherit windowsXamppPortablePhp80
+    constructor {environment} {
+        chain $environment
+        set shortVersionID 86
     } {
     }
 }

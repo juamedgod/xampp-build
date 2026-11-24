@@ -861,12 +861,15 @@
                     set shortComponentList [lappend shortComponentList "OpenSSL [versions::get OpenSSL stable], "]
                 }
                 set shortComponentList [lappend shortComponentList "XAMPP Control Panel 3.2.4, "]
-                regexp {^.*, windows(?:64)?XamppWebalizer ([^,]*),.*} $bundled_component_list_yml match webalizerVersion
-                set shortComponentList [lappend shortComponentList "Webalizer ${webalizerVersion}, "]
-                regexp {^.*, windows(?:64)?XamppMercuryMail ([^,]*),.*} $bundled_component_list_yml match mercuryVersion
-                set shortComponentList [lappend shortComponentList "Mercury Mail Transport System ${mercuryVersion}, "]
-                regexp {^.*, windows(?:64)?XamppFileZillaFTP ([^,]*),.*} $bundled_component_list_yml match filezillaVersion
-                set shortComponentList [lappend shortComponentList "FileZilla FTP Server ${filezillaVersion}, "]
+                if {[regexp {^.*, windows(?:64)?XamppWebalizer ([^,]*),.*} $bundled_component_list_yml match webalizerVersion]} {
+                    set shortComponentList [lappend shortComponentList "Webalizer ${webalizerVersion}, "]
+                }
+                if {[regexp {^.*, windows(?:64)?XamppMercuryMail ([^,]*),.*} $bundled_component_list_yml match mercuryVersion]} {
+                    set shortComponentList [lappend shortComponentList "Mercury Mail Transport System ${mercuryVersion}, "]
+                }
+                if {[regexp {^.*, windows(?:64)?XamppFileZillaFTP ([^,]*),.*} $bundled_component_list_yml match filezillaVersion]} {
+                    set shortComponentList [lappend shortComponentList "FileZilla FTP Server ${filezillaVersion}, "]
+                }
                 regexp {^.*, windows(?:64)?XamppTomcat ([^,]*),.*} $bundled_component_list_yml match tomcatVersion
                 set shortComponentList [lappend shortComponentList "Tomcat ${tomcatVersion} (with mod_proxy_ajp as connector), "]
                 regexp {^.*, windows(?:64)?XamppPerl ([^,]*),.*} $bundled_component_list_yml match perlVersion
