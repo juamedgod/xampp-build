@@ -109,7 +109,7 @@ jobs:
             local url="$1"
             local output="${2:-$(basename "${url%%\?*}")}"
             local download_url="$url"
-            local auth_args=()
+            local args=()
             if [[ "${SOURCEFORGE_CACHE_SERVER_ENABLED:-true}" == "true" ]] &&
                [[ -n "${SOURCEFORGE_CACHE_SERVER:-}" ]] &&
                [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
@@ -117,7 +117,8 @@ jobs:
                 https://sourceforge.net/projects/xampp/files/*)
                   download_url="${SOURCEFORGE_CACHE_SERVER%/}/${url#*://sourceforge.net/}"
                   if [[ -n "${SOURCEFORGE_CACHE_SERVER_AUTH:-}" ]]; then
-                      auth_args+=(-H "Authorization: ${SOURCEFORGE_CACHE_SERVER_AUTH}")
+                      args+=(-H "Authorization: ${SOURCEFORGE_CACHE_SERVER_AUTH}")
+                      args+=(-w '%header{cf-cache-status} (Age: %header{age}s)\n%header{x-artifact-id}')
                   fi
                   echo "Using download cache"
                   ;;
@@ -125,7 +126,7 @@ jobs:
             fi
 
             curl --silent --fail --location --retry 3 --retry-delay 2 --retry-all-errors --show-error \
-              "${auth_args[@]}" \
+              "${args[@]}" \
               --output "$output" \
               "$download_url"
           }
